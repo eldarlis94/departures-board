@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+<meta name="theme-color" content="#0B1F2A" />
+<title>לוח יציאות</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;800&family=Heebo:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#0B1F2A; --panel:#11303C; --panel2:#0E2832; --line:#244653;
+    --sand:#ECE5D4; --muted:#8AA6B0; --gold:#E8B04B; --teal:#4FB0A5;
+    --coral:#E5654B; --orange:#E0894C;
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0}
+  body{
+    background:var(--bg); color:var(--sand);
+    font-family:'Heebo',system-ui,-apple-system,'Arial Hebrew',sans-serif;
+    line-height:1.5; padding:env(safe-area-inset-top) 0 40px;
+  }
+  .wrap{max-width:920px; margin:0 auto; padding:22px 16px}
+  header{border-bottom:1px solid var(--line); padding-bottom:16px; margin-bottom:16px}
+  .kicker{font-size:12px; letter-spacing:2px; color:var(--muted); text-transform:uppercase}
+  h1{font-family:'Frank Ruhl Libre',serif; font-weight:800; font-size:clamp(28px,7vw,40px); margin:4px 0 2px; letter-spacing:-.5px}
+  .date{font-size:13px; color:var(--muted)}
+  .opp{
+    margin-top:16px; background:linear-gradient(180deg,#15323d,#102832);
+    border:1px solid var(--gold); border-radius:16px; padding:14px 16px;
+  }
+  .opp .lbl{font-size:12px; font-weight:700; color:var(--gold); display:flex; gap:6px; align-items:center}
+  .opp p{margin:6px 0 0; font-size:14.5px; color:var(--sand)}
+  .grid{display:grid; grid-template-columns:1fr; gap:13px}
+  @media(min-width:560px){.grid{grid-template-columns:1fr 1fr}}
+  @media(min-width:860px){.grid{grid-template-columns:1fr 1fr 1fr}}
+  .card{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:15px; display:flex; flex-direction:column; gap:11px}
+  .card.barred{opacity:.6}
+  .crow{display:flex; align-items:flex-start; justify-content:space-between; gap:8px}
+  .name{font-family:'Frank Ruhl Libre',serif; font-weight:800; font-size:21px; line-height:1.1}
+  .sub{font-size:12px; color:var(--muted); margin-top:2px}
+  .code{font-size:12px; color:var(--muted); font-family:'Heebo',monospace; letter-spacing:1px}
+  .visa{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+  .dot{width:9px; height:9px; border-radius:99px; flex:0 0 auto}
+  .pill{font-size:12px; font-weight:700; padding:3px 10px; border-radius:99px; border:1px solid currentColor}
+  .pill.solid{color:var(--bg)!important}
+  .days{font-size:12px; color:var(--muted)}
+  .summary{font-size:13px; color:var(--sand)}
+  .note{font-size:12px; color:var(--orange); line-height:1.45}
+  .facts{display:flex; gap:18px; border-top:1px solid var(--line); padding-top:10px}
+  .fact .fl{font-size:11px; color:var(--muted)}
+  .fact .fv{font-size:15px; font-weight:700}
+  .hl{font-size:12.5px; color:var(--muted)}
+  .src{font-size:11px; color:var(--muted); margin-top:auto}
+  footer{margin-top:24px; border-top:1px solid var(--line); padding-top:14px; font-size:12px; color:var(--muted)}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <div class="kicker">מסך אישי · דרכון ישראלי · חד-כיווני</div>
+    <h1>לוח יציאות</h1>
+    <div class="date" id="date"></div>
+    <div class="opp" id="opp" hidden>
+      <div class="lbl">🌟 ההזדמנות של היום</div>
+      <p id="oppText"></p>
+    </div>
+  </header>
+
+  <div class="grid" id="grid"></div>
+
+  <footer>
+    הדף מתרענן אוטומטית פעם ביום על ידי המשימה ב‑Cowork. מחירי טיסות הם הערכה גסה —
+    התראות Google Flights תופסות דילים בזמן אמת. ויזות מאומתות מול מקור עדכני בכל ריצה.
+  </footer>
+</div>
+
+<!-- ===== BOARD DATA — Cowork מעדכן רק את ה-JSON בין שני התגים האלה ===== -->
+<script id="board-data" type="application/json">
+{
+  "lastUpdated": "30.6.2026",
+  "opportunity": "סרי לנקה — ETA חינם והכי זול מבין היעדים, וטיסות מתחילות מ-$350. ה-ROI הכי גבוה לאוגוסט.",
+  "destinations": [
+    {"id":"lk","nameHe":"סרי לנקה","nameEn":"Sri Lanka","code":"CMB","flag":"🇱🇰","continent":"אסיה","visaStatus":"open","visaSummary":"ETA תיירותי בחינם, 30 יום, כניסה כפולה. מגישים אונליין מראש, ניתן להאריך.","note":"","maxDays":"30","costPerDay":"~$25","flightEstimate":"~$350–500","highlight":"ספארי נמרים ביאלה · לוויתנים כחולים במיריסה · צלילה ב-Pigeon Island · רכבת ההר","sources":["eta.gov.lk"],"tracked":true},
+    {"id":"vn","nameHe":"וייטנאם","nameEn":"Vietnam","code":"HAN/SGN","flag":"🇻🇳","continent":"אסיה","visaStatus":"evisa","visaSummary":"e-visa עד 90 יום, 25–50$, מגישים ב-evisa.gov.vn, אישור 3–7 ימים.","note":"לא ניתן להארכה — יוצאים ונכנסים מחדש.","maxDays":"90","costPerDay":"~$28–32","flightEstimate":"~$350–550","highlight":"הא לונג · מערות פונג נ'ה · נין בין · צלילה בינונית","sources":["evisa.gov.vn"],"tracked":true},
+    {"id":"ph","nameHe":"פיליפינים","nameEn":"Philippines","code":"MNL","flag":"🇵🇭","continent":"אסיה","visaStatus":"open","visaSummary":"ללא ויזה, 59 יום (הסכם מיוחד עם ישראל). צריך דרכון בתוקף 6 חודשים וכרטיס המשך.","note":"","maxDays":"59","costPerDay":"~$35–45","flightEstimate":"~$450–600","highlight":"צלילה עולמית: פלאוואן · מלפסקואה · קורון · כרישי לווייתן · מואלבואל","sources":["dfa.gov.ph"],"tracked":true},
+    {"id":"th","nameHe":"תאילנד","nameEn":"Thailand","code":"BKK","flag":"🇹🇭","continent":"אסיה","visaStatus":"watch","visaSummary":"כרגע פטור ויזה ל-60 יום (אוטומטי), ניתן להאריך ב-30.","note":"אושר מעבר ל-30 יום — טרם בתוקף, לעקוב. צריך TDAC תוך 72ש' לפני הנחיתה.","maxDays":"60","costPerDay":"~$35–55","flightEstimate":"~$300–500","highlight":"צלילה: קוטאו · סימילן · תשתית תרמילאות מעולה","sources":["thaiembassy.org"],"tracked":false},
+    {"id":"id","nameHe":"אינדונזיה","nameEn":"Indonesia","code":"DPS","flag":"🇮🇩","continent":"אסיה","visaStatus":"hard","visaSummary":"אין VOA רגיל לישראלים — סיווג \"calling visa\".","note":"אישור מראש מג'קרטה + מכתב הזמנה, כניסה דרך 4 שדות בלבד. פרויקט בירוקרטי.","maxDays":"30*","costPerDay":"~$30–40","flightEstimate":"~$400–600","highlight":"צלילה חלומית: ראג'ה אמפט · קומודו · נוסה פנידה","sources":["imigrasi.go.id"],"tracked":false},
+    {"id":"my","nameHe":"מלזיה","nameEn":"Malaysia","code":"—","flag":"🇲🇾","continent":"אסיה","visaStatus":"barred","visaSummary":"דרכון ישראלי לא מורשה כניסה למלזיה.","note":"מחוץ למשחק אלא אם יש אישור מיוחד ממשרד הפנים המלזי.","maxDays":"—","costPerDay":"—","flightEstimate":"—","highlight":"—","sources":[],"tracked":false}
+  ]
+}
+</script>
+<!-- ===== END BOARD DATA ===== -->
+
+<script>
+  var STATUS = {
+    open:  {label:"פתוח · קל",   color:"#E8B04B", solid:true},
+    evisa: {label:"e-visa",      color:"#4FB0A5", solid:false},
+    watch: {label:"פתוח · בשינוי",color:"#E0894C", solid:false},
+    hard:  {label:"מורכב",       color:"#E0894C", solid:false},
+    barred:{label:"חסום",        color:"#E5654B", solid:false},
+    unknown:{label:"טרם נחקר",   color:"#8AA6B0", solid:false}
+  };
+  function esc(s){var d=document.createElement('div'); d.textContent=s==null?'':String(s); return d.innerHTML;}
+  function render(){
+    var data;
+    try{ data = JSON.parse(document.getElementById('board-data').textContent); }
+    catch(e){ document.getElementById('grid').innerHTML = '<div style="color:#E5654B">שגיאה בטעינת הנתונים.</div>'; return; }
+    document.getElementById('date').textContent = 'עודכן ' + (data.lastUpdated||'');
+    if(data.opportunity){ document.getElementById('opp').hidden=false; document.getElementById('oppText').textContent = data.opportunity; }
+    var grid = document.getElementById('grid'); grid.innerHTML='';
+    (data.destinations||[]).forEach(function(d){
+      var s = STATUS[d.visaStatus] || STATUS.unknown;
+      var pillStyle = s.solid ? 'color:'+s.color+';background:'+s.color : 'color:'+s.color;
+      var card = document.createElement('div');
+      card.className = 'card' + (d.visaStatus==='barred'?' barred':'');
+      card.innerHTML =
+        '<div class="crow"><div>'+
+          '<div class="name">'+esc(d.flag)+' '+esc(d.nameHe)+'</div>'+
+          '<div class="sub">'+esc(d.nameEn)+' · '+esc(d.continent)+'</div>'+
+        '</div><div class="code">'+esc(d.code)+'</div></div>'+
+        '<div class="visa"><span class="dot" style="background:'+s.color+'"></span>'+
+          '<span class="pill'+(s.solid?' solid':'')+'" style="'+pillStyle+'">'+esc(s.label)+'</span>'+
+          (d.maxDays && d.maxDays!=='—' ? '<span class="days">· עד '+esc(d.maxDays)+' יום</span>':'')+
+        '</div>'+
+        (d.visaSummary ? '<div class="summary">'+esc(d.visaSummary)+'</div>':'')+
+        (d.note ? '<div class="note">⚠ '+esc(d.note)+'</div>':'')+
+        '<div class="facts">'+
+          '<div class="fact"><div class="fl">עלות/יום</div><div class="fv" style="color:#4FB0A5">'+esc(d.costPerDay||'—')+'</div></div>'+
+          '<div class="fact"><div class="fl">טיסה (הערכה)</div><div class="fv" style="color:#E8B04B">'+esc(d.flightEstimate||'—')+'</div></div>'+
+        '</div>'+
+        (d.highlight && d.highlight!=='—' ? '<div class="hl">🐠 '+esc(d.highlight)+'</div>':'')+
+        '<div class="src">'+(d.sources&&d.sources.length?'מקור: '+esc(d.sources.join(', ')):'')+'</div>';
+      grid.appendChild(card);
+    });
+  }
+  render();
+</script>
+</body>
+</html>
