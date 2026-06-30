@@ -7,7 +7,7 @@
 <title>לוח יציאות</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;800&family=Heebo:wght@400;500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;700;800&family=Rubik:wght@600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root{
     --bg:#0B1F2A; --panel:#11303C; --panel2:#0E2832; --line:#244653;
@@ -17,33 +17,50 @@
   *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
   html,body{margin:0}
   body{
-    background:var(--bg); color:var(--sand);
+    background:
+      radial-gradient(900px 420px at 15% -10%, rgba(79,176,165,.13), transparent 60%),
+      radial-gradient(900px 420px at 100% 0%, rgba(232,176,75,.10), transparent 55%),
+      var(--bg);
+    color:var(--sand);
     font-family:'Heebo',system-ui,-apple-system,'Arial Hebrew',sans-serif;
     line-height:1.5; padding:env(safe-area-inset-top) 0 40px;
   }
-  .wrap{max-width:920px; margin:0 auto; padding:22px 16px}
-  header{border-bottom:1px solid var(--line); padding-bottom:16px; margin-bottom:16px}
-  .kicker{font-size:12px; letter-spacing:2px; color:var(--muted); text-transform:uppercase}
-  h1{font-family:'Frank Ruhl Libre',serif; font-weight:800; font-size:clamp(28px,7vw,40px); margin:4px 0 2px; letter-spacing:-.5px}
+  .wrap{max-width:960px; margin:0 auto; padding:26px 16px}
+  header{border-bottom:1px solid var(--line); padding-bottom:18px; margin-bottom:18px}
+  h1{font-family:'Rubik',system-ui,sans-serif; font-weight:800; font-size:clamp(28px,7vw,40px); margin:0 0 4px; letter-spacing:-.5px}
   .date{font-size:13px; color:var(--muted)}
   .opp{
-    margin-top:16px; background:linear-gradient(180deg,#15323d,#102832);
-    border:1px solid var(--gold); border-radius:16px; padding:14px 16px;
+    margin-top:16px; background:linear-gradient(135deg,#15323d,#102832);
+    border:1px solid var(--gold); border-radius:18px; padding:14px 16px;
+    box-shadow:0 8px 24px rgba(0,0,0,.18);
   }
   .opp .lbl{font-size:12px; font-weight:700; color:var(--gold); display:flex; gap:6px; align-items:center}
   .opp p{margin:6px 0 0; font-size:14.5px; color:var(--sand)}
-  .grid{display:grid; grid-template-columns:1fr; gap:13px}
+  .grid{display:grid; grid-template-columns:1fr; gap:16px}
   @media(min-width:560px){.grid{grid-template-columns:1fr 1fr}}
   @media(min-width:860px){.grid{grid-template-columns:1fr 1fr 1fr}}
-  .card{background:var(--panel); border:1px solid var(--line); border-radius:16px; padding:15px; display:flex; flex-direction:column; gap:11px}
+  .card{
+    background:var(--panel); border:1px solid var(--line); border-radius:18px;
+    overflow:hidden; display:flex; flex-direction:column;
+    box-shadow:0 6px 20px rgba(0,0,0,.16); transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .card:hover{transform:translateY(-2px); box-shadow:0 12px 28px rgba(0,0,0,.24)}
   .card.barred{opacity:.6}
+  .thumb{position:relative; height:140px; background:linear-gradient(135deg,#15323d,#0E2832)}
+  .thumb img{width:100%; height:100%; object-fit:cover; display:block}
+  .thumb .flagBadge{
+    position:absolute; bottom:8px; right:8px; background:rgba(11,31,42,.78);
+    backdrop-filter:blur(2px); border-radius:99px; padding:4px 9px; font-size:18px;
+    line-height:1; box-shadow:0 2px 8px rgba(0,0,0,.3);
+  }
+  .cardBody{padding:15px; display:flex; flex-direction:column; gap:11px}
   .crow{display:flex; align-items:flex-start; justify-content:space-between; gap:8px}
-  .name{font-family:'Frank Ruhl Libre',serif; font-weight:800; font-size:21px; line-height:1.1}
+  .name{font-family:'Rubik',sans-serif; font-weight:700; font-size:20px; line-height:1.15}
   .sub{font-size:12px; color:var(--muted); margin-top:2px}
   .code{font-size:12px; color:var(--muted); font-family:'Heebo',monospace; letter-spacing:1px}
-  .visa{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
-  .dot{width:9px; height:9px; border-radius:99px; flex:0 0 auto}
-  .pill{font-size:12px; font-weight:700; padding:3px 10px; border-radius:99px; border:1px solid currentColor}
+  .visaRow{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
+  .visaTag{font-size:10.5px; font-weight:700; color:var(--muted); letter-spacing:.5px; text-transform:uppercase; display:flex; align-items:center; gap:4px}
+  .pill{font-size:12px; font-weight:700; padding:4px 11px; border-radius:99px; border:1px solid currentColor; display:inline-flex; align-items:center; gap:4px}
   .pill.solid{color:var(--bg)!important}
   .days{font-size:12px; color:var(--muted)}
   .summary{font-size:13px; color:var(--sand)}
@@ -51,16 +68,25 @@
   .facts{display:flex; gap:18px; border-top:1px solid var(--line); padding-top:10px}
   .fact .fl{font-size:11px; color:var(--muted)}
   .fact .fv{font-size:15px; font-weight:700}
-  .hl{font-size:12.5px; color:var(--muted)}
+  .hl{font-size:12.5px; color:var(--sand); background:rgba(79,176,165,.08); border-radius:10px; padding:8px 10px}
+  .flightBox{
+    display:flex; align-items:center; gap:10px; text-decoration:none; color:inherit;
+    background:var(--panel2); border:1px dashed var(--teal); border-radius:12px; padding:9px 11px;
+    transition:background .15s ease;
+  }
+  .flightBox:hover{background:#102e36}
+  .flightIcon{font-size:18px}
+  .flightText{font-size:12.5px; flex:1}
+  .flightText b{display:block; font-size:13px; color:var(--sand)}
+  .flightArrow{font-size:18px; color:var(--teal)}
   .src{font-size:11px; color:var(--muted); margin-top:auto}
   footer{margin-top:24px; border-top:1px solid var(--line); padding-top:14px; font-size:12px; color:var(--muted)}
-  @media(prefers-reduced-motion:reduce){*{animation:none!important}}
+  @media(prefers-reduced-motion:reduce){*{animation:none!important; transition:none!important}}
 </style>
 </head>
 <body>
 <div class="wrap">
   <header>
-    <div class="kicker">מסך אישי · דרכון ישראלי · חד-כיווני</div>
     <h1>לוח יציאות</h1>
     <div class="date" id="date"></div>
     <div class="opp" id="opp" hidden>
@@ -83,13 +109,10 @@
   "lastUpdated": "30.6.2026",
   "opportunity": "תאילנד עדיין נותנת 60 יום אך הקיצוץ ל-30 כבר אושר וממתין רק לפרסום ברשומות הרשמיות — אם תאילנד ביעד, להקדים את הטיסה; בינתיים פיליפינים נשארות עם 59 יום ללא עלות, השהות הארוכה והזולה ביותר מכל היעדים.",
   "destinations": [
-    {"id":"lk","nameHe":"סרי לנקה","nameEn":"Sri Lanka","code":"CMB","flag":"🇱🇰","continent":"אסיה","visaStatus":"open","visaSummary":"ETA תיירותי בחינם (ללא תשלום) ל-40 לאומים כולל ישראל מאז 25.5.2026, 30 יום, כניסה כפולה. מגישים רק באתר הרשמי eta.gov.lk — אתרי צד ג' גובים $80–150 במרמה.","note":"","maxDays":"30","costPerDay":"~$25–35","flightEstimate":"~$350–600","highlight":"ספארי נמרים ביאלה · לוויתנים כחולים במיריסה · צלילה ב-Pigeon Island · רכבת ההר","sources":["eta.gov.lk","visasnews.com"],"tracked":true},
-    {"id":"vn","nameHe":"וייטנאם","nameEn":"Vietnam","code":"HAN/SGN","flag":"🇻🇳","continent":"אסיה","visaStatus":"evisa","visaSummary":"e-visa עד 90 יום, 25–50$, מגישים ב-evisa.gov.vn, אישור 3–7 ימים.","note":"לא ניתן להארכה — יוצאים ונכנסים מחדש. טיסות לאוגוסט יקרות יחסית בגלל ניתוב חלש (בעיקר עצירה אחת דרך אסטנבול/אבו דאבי/דוחא).","maxDays":"90","costPerDay":"~$25–30","flightEstimate":"~$450–750","highlight":"הא לונג · מערות פונג נ'ה · נין בין · צלילה בינונית","sources":["evisa.gov.vn"],"tracked":true},
-    {"id":"ph","nameHe":"פיליפינים","nameEn":"Philippines","code":"MNL","flag":"🇵🇭","continent":"אסיה","visaStatus":"open","visaSummary":"ללא ויזה, 59 יום — הסכם דו-צדדי מיוחד עם ישראל מ-1957/58 (לא ה-30 יום הגנרי שמופיע ברוב המקורות). צריך דרכון בתוקף 6 חודשים וכרטיס המשך.","note":"","maxDays":"59","costPerDay":"~$25–35","flightEstimate":"~$400–650","highlight":"צלילה עולמית: פלאוואן · מלפסקואה · קורון · כרישי לווייתן · מואלבואל","sources":["dfa.gov.ph"],"tracked":true},
-    {"id":"th","nameHe":"תאילנד","nameEn":"Thailand","code":"BKK","flag":"🇹🇭","continent":"אסיה","visaStatus":"watch","visaSummary":"כרגע פטור ויזה ל-60 יום (אוטומטי), ניתן להאריך ב-30 (1,900 בהט).","note":"הממשלה אישרה ב-19.5.2026 קיצוץ ל-30 יום, טרם פורסם ברשומות הרשמיות — עלול להיכנס לתוקף בכל רגע לפני אוגוסט. צריך TDAC תוך 72ש' לפני הנחיתה.","maxDays":"60","costPerDay":"~$35–55","flightEstimate":"~$400–650","highlight":"צלילה: קוטאו · סימילן · תשתית תרמילאות מעולה","sources":["thaiembassy.org","tatnews.org"],"tracked":false},
-    {"id":"id","nameHe":"אינדונזיה","nameEn":"Indonesia","code":"DPS","flag":"🇮🇩","continent":"אסיה","visaStatus":"hard","visaSummary":"אין VOA רגיל לישראלים — סיווג \"calling visa\" כי אין יחסים דיפלומטיים.","note":"אישור נדיר ביותר — רק 51 אושרו עד נוב' 2025. צריך מכתב הזמנה + אישור מראש ממשרד ההגירה בג'קרטה, שבועות הכנה, סיכוי דחייה ממשי. כניסה רק דרך 4 שדות (באלי/ג'קרטה/סוראבאיה).","maxDays":"30*","costPerDay":"~$25–40","flightEstimate":"~$500–800","highlight":"צלילה חלומית: ראג'ה אמפט · קומודו · נוסה פנידה","sources":["imigrasi.go.id"],"tracked":false},
-    {"id":"my","nameHe":"מלזיה","nameEn":"Malaysia","code":"—","flag":"🇲🇾","continent":"אסיה","visaStatus":"barred","visaSummary":"דרכון ישראלי לא מורשה כניסה למלזיה — אין יחסים דיפלומטיים.","note":"מחוץ למשחק. גם טרנזיט ב-KLIA מסוכן: לפחות 8 ישראלים נעצרו בשדה קואלה לומפור מאז תחילת 2026, כולל נוסעים בטרנזיט בלבד. שגרירות ישראל ממליצה להימנע גם מקונקשן דרך מלזיה.","maxDays":"—","costPerDay":"—","flightEstimate":"—","highlight":"—","sources":[],"tracked":false},
-    {"id":"ke","nameHe":"קניה","nameEn":"Kenya","code":"NBO","flag":"🇰🇪","continent":"אפריקה","visaStatus":"evisa","visaSummary":"eTA חובה ($30), הגשה אונליין פשוטה ב-etakenya.go.ke, אישור תוך 24–72 שעות, עד 90 יום (ניתן להאריך עד 6 חודשים).","note":"יעד חדש שנוסף — שילוב נדיר של ספארי וצלילה, אפשר להמשיך לזנזיבר בטנזניה עם e-visa נפרד (~$50, 90 יום).","maxDays":"90","costPerDay":"~$25–40","flightEstimate":"~$420–650","highlight":"ספארי במסאי מארה · נדידת האנטילופות (טנזניה, בעונה) · צלילה וחופים בזנזיבר","sources":["etakenya.go.ke","visit-tz.com"],"tracked":true}
+    {"id":"vn","nameHe":"וייטנאם","nameEn":"Vietnam","code":"HAN/SGN","flag":"🇻🇳","continent":"אסיה","visaStatus":"evisa","visaSummary":"e-visa עד 90 יום, 25–50$, מגישים ב-evisa.gov.vn, אישור 3–7 ימים.","note":"לא ניתן להארכה — יוצאים ונכנסים מחדש. טיסות לאוגוסט יקרות יחסית בגלל ניתוב חלש (בעיקר עצירה אחת דרך אסטנבול/אבו דאבי/דוחא).","maxDays":"90","costPerDay":"~$25–30","flightEstimate":"~$450–750","highlight":"מפרץ הא-לונג מהאוויר · מערות פונג נְה הענקיות · טראסות אורז בסאפה","sources":["evisa.gov.vn"],"tracked":true},
+    {"id":"ph","nameHe":"פיליפינים","nameEn":"Philippines","code":"MNL","flag":"🇵🇭","continent":"אסיה","visaStatus":"open","visaSummary":"ללא ויזה, 59 יום — הסכם דו-צדדי מיוחד עם ישראל מ-1957/58 (לא ה-30 יום הגנרי שמופיע ברוב המקורות). צריך דרכון בתוקף 6 חודשים וכרטיס המשך.","note":"","maxDays":"59","costPerDay":"~$25–35","flightEstimate":"~$400–650","highlight":"לגונות תכולות ואיים סלעיים בפלאוואן · צלילה עם כרישי לווייתן · קורון השקועה","sources":["dfa.gov.ph"],"tracked":true},
+    {"id":"th","nameHe":"תאילנד","nameEn":"Thailand","code":"BKK","flag":"🇹🇭","continent":"אסיה","visaStatus":"watch","visaSummary":"כרגע פטור ויזה ל-60 יום (אוטומטי), ניתן להאריך ב-30 (1,900 בהט).","note":"הממשלה אישרה ב-19.5.2026 קיצוץ ל-30 יום, טרם פורסם ברשומות הרשמיות — עלול להיכנס לתוקף בכל רגע לפני אוגוסט. צריך TDAC תוך 72ש' לפני הנחיתה.","maxDays":"60","costPerDay":"~$35–55","flightEstimate":"~$400–650","highlight":"איי סימילן וקו-טאו לצלילה · חופי האנדמן · חיי לילה ותרמילאות עולמיים","sources":["thaiembassy.org","tatnews.org"],"tracked":false},
+    {"id":"ke","nameHe":"קניה","nameEn":"Kenya","code":"NBO","flag":"🇰🇪","continent":"אפריקה","visaStatus":"evisa","visaSummary":"eTA חובה ($30), הגשה אונליין פשוטה ב-etakenya.go.ke, אישור תוך 24–72 שעות, עד 90 יום (ניתן להאריך עד 6 חודשים).","note":"יעד חדש שנוסף — שילוב נדיר של ספארי וצלילה, אפשר להמשיך לזנזיבר בטנזניה עם e-visa נפרד (~$50, 90 יום).","maxDays":"90","costPerDay":"~$25–40","flightEstimate":"~$420–650","highlight":"ספארי במסאי מארה · נדידת המיליונים בעונה · חופי קוראל וצלילה בזנזיבר","sources":["etakenya.go.ke","visit-tz.com"],"tracked":true}
   ]
 }
 </script>
@@ -97,14 +120,26 @@
 
 <script>
   var STATUS = {
-    open:  {label:"פתוח · קל",   color:"#E8B04B", solid:true},
-    evisa: {label:"e-visa",      color:"#4FB0A5", solid:false},
-    watch: {label:"פתוח · בשינוי",color:"#E0894C", solid:false},
-    hard:  {label:"מורכב",       color:"#E0894C", solid:false},
-    barred:{label:"חסום",        color:"#E5654B", solid:false},
-    unknown:{label:"טרם נחקר",   color:"#8AA6B0", solid:false}
+    open:  {label:"ויזה: פתוחה",     color:"#E8B04B", solid:true},
+    evisa: {label:"ויזה: e-Visa",    color:"#4FB0A5", solid:false},
+    watch: {label:"ויזה: בשינוי",    color:"#E0894C", solid:false},
+    hard:  {label:"ויזה: מורכבת",    color:"#E0894C", solid:false},
+    barred:{label:"ויזה: חסומה",     color:"#E5654B", solid:false},
+    unknown:{label:"ויזה: לא ידוע",  color:"#8AA6B0", solid:false}
+  };
+  // תמונות נוף ייצוגיות לכל יעד (Wikimedia Commons). לא חלק מ-board-data כדי לא לגעת בסכמה שהמשימה היומית תלויה בה.
+  var IMAGES = {
+    vn: "https://commons.wikimedia.org/wiki/Special:FilePath/Halong_Bay_in_Vietnam.jpg?width=640",
+    ph: "https://commons.wikimedia.org/wiki/Special:FilePath/El_Nido_Bay,_islands,_Palawan,_Philippines.jpg?width=640",
+    th: "https://commons.wikimedia.org/wiki/Special:FilePath/Mu_Ko_Similan_National_Park_Thailand.jpg?width=640",
+    ke: "https://commons.wikimedia.org/wiki/Special:FilePath/Wildebeest_Migration_Masai_mara.jpg?width=640"
   };
   function esc(s){var d=document.createElement('div'); d.textContent=s==null?'':String(s); return d.innerHTML;}
+  // קישור חיפוש כללי ב-Google Flights לאוגוסט; אם בעתיד board-data יכלול flightUrl/flightPrice/flightStops ספציפיים, התצוגה תשתמש בהם במקום.
+  function flightSearchUrl(d){
+    var q = 'טיסות מתל אביב ל' + d.nameHe + ' באוגוסט 2026';
+    return 'https://www.google.com/travel/flights?hl=he&q=' + encodeURIComponent(q);
+  }
   function render(){
     var data;
     try{ data = JSON.parse(document.getElementById('board-data').textContent); }
@@ -115,14 +150,24 @@
     (data.destinations||[]).forEach(function(d){
       var s = STATUS[d.visaStatus] || STATUS.unknown;
       var pillStyle = s.solid ? 'color:'+s.color+';background:'+s.color : 'color:'+s.color;
+      var img = IMAGES[d.id];
+      var flightUrl = d.flightUrl || flightSearchUrl(d);
+      var flightDetail = (d.flightPrice || d.flightStops)
+        ? [d.flightPrice, d.flightStops].filter(Boolean).join(' · ')
+        : 'חפש טיסה מומלצת לאוגוסט';
       var card = document.createElement('div');
       card.className = 'card' + (d.visaStatus==='barred'?' barred':'');
       card.innerHTML =
+        '<div class="thumb">'+
+          (img ? '<img src="'+esc(img)+'" alt="נוף מ'+esc(d.nameHe)+'" loading="lazy">' : '')+
+          '<div class="flagBadge">'+esc(d.flag)+'</div>'+
+        '</div>'+
+        '<div class="cardBody">'+
         '<div class="crow"><div>'+
-          '<div class="name">'+esc(d.flag)+' '+esc(d.nameHe)+'</div>'+
+          '<div class="name">'+esc(d.nameHe)+'</div>'+
           '<div class="sub">'+esc(d.nameEn)+' · '+esc(d.continent)+'</div>'+
         '</div><div class="code">'+esc(d.code)+'</div></div>'+
-        '<div class="visa"><span class="dot" style="background:'+s.color+'"></span>'+
+        '<div class="visaRow"><span class="visaTag">🛂 סטטוס ויזה</span>'+
           '<span class="pill'+(s.solid?' solid':'')+'" style="'+pillStyle+'">'+esc(s.label)+'</span>'+
           (d.maxDays && d.maxDays!=='—' ? '<span class="days">· עד '+esc(d.maxDays)+' יום</span>':'')+
         '</div>'+
@@ -132,8 +177,14 @@
           '<div class="fact"><div class="fl">עלות/יום</div><div class="fv" style="color:#4FB0A5">'+esc(d.costPerDay||'—')+'</div></div>'+
           '<div class="fact"><div class="fl">טיסה (הערכה)</div><div class="fv" style="color:#E8B04B">'+esc(d.flightEstimate||'—')+'</div></div>'+
         '</div>'+
-        (d.highlight && d.highlight!=='—' ? '<div class="hl">🐠 '+esc(d.highlight)+'</div>':'')+
-        '<div class="src">'+(d.sources&&d.sources.length?'מקור: '+esc(d.sources.join(', ')):'')+'</div>';
+        (d.highlight && d.highlight!=='—' ? '<div class="hl">✨ '+esc(d.highlight)+'</div>':'')+
+        '<a class="flightBox" href="'+esc(flightUrl)+'" target="_blank" rel="noopener">'+
+          '<span class="flightIcon">✈️</span>'+
+          '<span class="flightText"><b>טיסה מומלצת · אוגוסט</b><span>'+esc(flightDetail)+'</span></span>'+
+          '<span class="flightArrow">‹</span>'+
+        '</a>'+
+        '<div class="src">'+(d.sources&&d.sources.length?'מקור: '+esc(d.sources.join(', ')):'')+'</div>'+
+        '</div>';
       grid.appendChild(card);
     });
   }
