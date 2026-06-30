@@ -60,9 +60,14 @@
   .code{font-size:12px; color:var(--muted); font-family:'Heebo',monospace; letter-spacing:1px}
   .visaRow{display:flex; align-items:center; gap:8px; flex-wrap:wrap}
   .visaTag{font-size:10.5px; font-weight:700; color:var(--muted); letter-spacing:.5px; text-transform:uppercase; display:flex; align-items:center; gap:4px}
-  .pill{font-size:12px; font-weight:700; padding:4px 11px; border-radius:99px; border:1px solid currentColor; display:inline-flex; align-items:center; gap:4px}
+  .pill{font-size:12px; font-weight:700; padding:4px 11px; border-radius:99px; border:1px solid currentColor; display:inline-flex; align-items:center; gap:5px; cursor:pointer; background:none; font-family:inherit}
   .pill.solid{color:var(--bg)!important}
+  .pill .chev{font-size:10px; transition:transform .15s ease; display:inline-block}
+  .pill[aria-expanded="true"] .chev{transform:rotate(180deg)}
+  .pill:focus-visible{outline:2px solid var(--sand); outline-offset:2px}
   .days{font-size:12px; color:var(--muted)}
+  .visaPanel{font-size:13px; color:var(--sand); background:var(--panel2); border:1px solid var(--line); border-radius:12px; padding:10px 12px}
+  .visaPanel[hidden]{display:none}
   .summary{font-size:13px; color:var(--sand)}
   .note{font-size:12px; color:var(--orange); line-height:1.45}
   .facts{display:flex; gap:18px; border-top:1px solid var(--line); padding-top:10px}
@@ -112,7 +117,11 @@
     {"id":"vn","nameHe":"וייטנאם","nameEn":"Vietnam","code":"HAN/SGN","flag":"🇻🇳","continent":"אסיה","visaStatus":"evisa","visaSummary":"e-visa עד 90 יום, 25–50$, מגישים ב-evisa.gov.vn, אישור 3–7 ימים.","note":"לא ניתן להארכה — יוצאים ונכנסים מחדש. טיסות לאוגוסט יקרות יחסית בגלל ניתוב חלש (בעיקר עצירה אחת דרך אסטנבול/אבו דאבי/דוחא).","maxDays":"90","costPerDay":"~$25–30","flightEstimate":"~$450–750","highlight":"מפרץ הא-לונג מהאוויר · מערות פונג נְה הענקיות · טראסות אורז בסאפה","sources":["evisa.gov.vn"],"tracked":true},
     {"id":"ph","nameHe":"פיליפינים","nameEn":"Philippines","code":"MNL","flag":"🇵🇭","continent":"אסיה","visaStatus":"open","visaSummary":"ללא ויזה, 59 יום — הסכם דו-צדדי מיוחד עם ישראל מ-1957/58 (לא ה-30 יום הגנרי שמופיע ברוב המקורות). צריך דרכון בתוקף 6 חודשים וכרטיס המשך.","note":"","maxDays":"59","costPerDay":"~$25–35","flightEstimate":"~$400–650","highlight":"לגונות תכולות ואיים סלעיים בפלאוואן · צלילה עם כרישי לווייתן · קורון השקועה","sources":["dfa.gov.ph"],"tracked":true},
     {"id":"th","nameHe":"תאילנד","nameEn":"Thailand","code":"BKK","flag":"🇹🇭","continent":"אסיה","visaStatus":"watch","visaSummary":"כרגע פטור ויזה ל-60 יום (אוטומטי), ניתן להאריך ב-30 (1,900 בהט).","note":"הממשלה אישרה ב-19.5.2026 קיצוץ ל-30 יום, טרם פורסם ברשומות הרשמיות — עלול להיכנס לתוקף בכל רגע לפני אוגוסט. צריך TDAC תוך 72ש' לפני הנחיתה.","maxDays":"60","costPerDay":"~$35–55","flightEstimate":"~$400–650","highlight":"איי סימילן וקו-טאו לצלילה · חופי האנדמן · חיי לילה ותרמילאות עולמיים","sources":["thaiembassy.org","tatnews.org"],"tracked":false},
-    {"id":"ke","nameHe":"קניה","nameEn":"Kenya","code":"NBO","flag":"🇰🇪","continent":"אפריקה","visaStatus":"evisa","visaSummary":"eTA חובה ($30), הגשה אונליין פשוטה ב-etakenya.go.ke, אישור תוך 24–72 שעות, עד 90 יום (ניתן להאריך עד 6 חודשים).","note":"יעד חדש שנוסף — שילוב נדיר של ספארי וצלילה, אפשר להמשיך לזנזיבר בטנזניה עם e-visa נפרד (~$50, 90 יום).","maxDays":"90","costPerDay":"~$25–40","flightEstimate":"~$420–650","highlight":"ספארי במסאי מארה · נדידת המיליונים בעונה · חופי קוראל וצלילה בזנזיבר","sources":["etakenya.go.ke","visit-tz.com"],"tracked":true}
+    {"id":"ke","nameHe":"קניה","nameEn":"Kenya","code":"NBO","flag":"🇰🇪","continent":"אפריקה","visaStatus":"evisa","visaSummary":"eTA חובה ($30), הגשה אונליין פשוטה ב-etakenya.go.ke, אישור תוך 24–72 שעות, עד 90 יום (ניתן להאריך עד 6 חודשים).","note":"יעד חדש שנוסף — שילוב נדיר של ספארי וצלילה, אפשר להמשיך לזנזיבר בטנזניה עם e-visa נפרד (~$50, 90 יום).","maxDays":"90","costPerDay":"~$25–40","flightEstimate":"~$420–650","highlight":"ספארי במסאי מארה · נדידת המיליונים בעונה · חופי קוראל וצלילה בזנזיבר","sources":["etakenya.go.ke","visit-tz.com"],"tracked":true},
+    {"id":"tw","nameHe":"טאיוואן","nameEn":"Taiwan","code":"TPE","flag":"🇹🇼","continent":"אסיה","visaStatus":"open","visaSummary":"פטור ויזה מלא לדרכון ישראלי, עד 90 יום, ללא צורך בהגשה מראש — רק דרכון בתוקף 6 חודשים וכרטיס המשך.","note":"","maxDays":"90","costPerDay":"~$30–50","flightEstimate":"~$650–950 (אין טיסה ישירה, עצירה אחת לפחות)","highlight":"קניון טארוקו · שוקי לילה ותרבות סטריט-פוד · מעיינות חמים בהרי יאנגמינגשאן · צלילה באי גרין","sources":["boca.gov.tw"],"tracked":true},
+    {"id":"ec","nameHe":"אקוודור","nameEn":"Ecuador","code":"UIO/GYE","flag":"🇪🇨","continent":"דרום אמריקה","visaStatus":"open","visaSummary":"פטור ויזה מלא לדרכון ישראלי, עד 90 יום, ללא צורך בהגשה מראש — דרכון בתוקף 6 חודשים וכרטיס המשך.","note":"איי גלאפגוס יקרים משמעותית מהיבשת (כ-$100–150/יום, כולל היטל כניסה של $100) — שווה לתכנן כתוספת קצרה ולא כבסיס לכל הטיול.","maxDays":"90","costPerDay":"~$30–40 (יבשת; גלאפגוס יקר בהרבה)","flightEstimate":"~$900–1300 (טיסה ארוכה, לרוב 1–2 עצירות)","highlight":"איי גלאפגוס: צבי ענק ואיגואנות ים שלא קיימות בשום מקום אחר · האמזונס · הרי געש באנדים","sources":["cancilleria.gob.ec"],"tracked":true},
+    {"id":"py","nameHe":"פרגוואי","nameEn":"Paraguay","code":"ASU","flag":"🇵🇾","continent":"דרום אמריקה","visaStatus":"open","visaSummary":"פטור ויזה מלא לדרכון ישראלי, עד 90 יום — דרכון בתוקף 6 חודשים וכרטיס המשך.","note":"יעד פחות מתויר עם תשתית תרמילאות מצומצמת; טיולי ספארי בצ'אקו דורשים תכנון מראש ותקציב גבוה יותר מהיתר הטיול.","maxDays":"90","costPerDay":"~$35–50","flightEstimate":"~$950–1400 (טיסה ארוכה עם עצירות)","highlight":"ביצות הצ'אקו: יגוארים, קייפיברות וציפורים נדירות · הריסות ישועיות (אתר אונסקו) בטרינידד · קרבה למפלי איגואסו","sources":["mre.gov.py"],"tracked":true},
+    {"id":"co","nameHe":"קולומביה","nameEn":"Colombia","code":"BOG","flag":"🇨🇴","continent":"דרום אמריקה","visaStatus":"hard","visaSummary":"מ-23.7.2025 (תקנה 8558) נדרשת ויזה לדרכון ישראלי — לא פתוח כמו פעם. הגשה דיגיטלית מלאה דרך tramitesmre.cancilleria.gov.co, עד 30 יום קלנדריים לאישור. הקונסוליה הקולומביאנית בתל אביב נשארה פעילה לטיפול בוויזות גם אחרי שהשגרירות נסגרה ב-2024.","note":"תכנון מראש קריטי לאוגוסט — עם עד 30 יום עיבוד, להגיש לפחות 5–6 שבועות לפני הטיסה.","maxDays":"90 (לפי הויזה שתאושר)","costPerDay":"~$25–45","flightEstimate":"~$850–1300 (טיסה ארוכה, לרוב 1–2 עצירות)","highlight":"חופי קריביים בטיירונה · עמק קוקורה ועצי השעווה הענקיים · נהר הקשת קניו כריסטלס · צלילה באיי סן אנדרס","sources":["telaviv.consulado.gov.co"],"tracked":true}
   ]
 }
 </script>
@@ -120,19 +129,23 @@
 
 <script>
   var STATUS = {
-    open:  {label:"ויזה: פתוחה",     color:"#E8B04B", solid:true},
-    evisa: {label:"ויזה: e-Visa",    color:"#4FB0A5", solid:false},
-    watch: {label:"ויזה: בשינוי",    color:"#E0894C", solid:false},
-    hard:  {label:"ויזה: מורכבת",    color:"#E0894C", solid:false},
-    barred:{label:"ויזה: חסומה",     color:"#E5654B", solid:false},
-    unknown:{label:"ויזה: לא ידוע",  color:"#8AA6B0", solid:false}
+    open:  {label:"פתוחה",     color:"#E8B04B", solid:true},
+    evisa: {label:"e-Visa",    color:"#4FB0A5", solid:false},
+    watch: {label:"בשינוי",    color:"#E0894C", solid:false},
+    hard:  {label:"מורכבת",    color:"#E0894C", solid:false},
+    barred:{label:"חסומה",     color:"#E5654B", solid:false},
+    unknown:{label:"לא ידוע",  color:"#8AA6B0", solid:false}
   };
   // תמונות נוף ייצוגיות לכל יעד (Wikimedia Commons). לא חלק מ-board-data כדי לא לגעת בסכמה שהמשימה היומית תלויה בה.
   var IMAGES = {
     vn: "https://commons.wikimedia.org/wiki/Special:FilePath/Halong_Bay_in_Vietnam.jpg?width=640",
     ph: "https://commons.wikimedia.org/wiki/Special:FilePath/El_Nido_Bay,_islands,_Palawan,_Philippines.jpg?width=640",
     th: "https://commons.wikimedia.org/wiki/Special:FilePath/Mu_Ko_Similan_National_Park_Thailand.jpg?width=640",
-    ke: "https://commons.wikimedia.org/wiki/Special:FilePath/Wildebeest_Migration_Masai_mara.jpg?width=640"
+    ke: "https://commons.wikimedia.org/wiki/Special:FilePath/Wildebeest_Migration_Masai_mara.jpg?width=640",
+    tw: "https://commons.wikimedia.org/wiki/Special:FilePath/Taiwan_2009_HuaLien_Taroko_Gorge_FRD_5467.jpg?width=640",
+    ec: "https://commons.wikimedia.org/wiki/Special:FilePath/Marine_Iguana_Posing_In_Galapagos_Islands.jpg?width=640",
+    py: "https://commons.wikimedia.org/wiki/Special:FilePath/Trinidad_(Paraguay).JPG?width=640",
+    co: "https://commons.wikimedia.org/wiki/Special:FilePath/El_Cabo_at_Tayrona_National_Park.JPG?width=640"
   };
   function esc(s){var d=document.createElement('div'); d.textContent=s==null?'':String(s); return d.innerHTML;}
   // קישור חיפוש כללי ב-Google Flights לאוגוסט; אם בעתיד board-data יכלול flightUrl/flightPrice/flightStops ספציפיים, התצוגה תשתמש בהם במקום.
@@ -155,6 +168,7 @@
       var flightDetail = (d.flightPrice || d.flightStops)
         ? [d.flightPrice, d.flightStops].filter(Boolean).join(' · ')
         : 'חפש טיסה מומלצת לאוגוסט';
+      var panelId = 'visaPanel-' + d.id;
       var card = document.createElement('div');
       card.className = 'card' + (d.visaStatus==='barred'?' barred':'');
       card.innerHTML =
@@ -168,10 +182,10 @@
           '<div class="sub">'+esc(d.nameEn)+' · '+esc(d.continent)+'</div>'+
         '</div><div class="code">'+esc(d.code)+'</div></div>'+
         '<div class="visaRow"><span class="visaTag">🛂 סטטוס ויזה</span>'+
-          '<span class="pill'+(s.solid?' solid':'')+'" style="'+pillStyle+'">'+esc(s.label)+'</span>'+
+          '<button type="button" class="pill'+(s.solid?' solid':'')+'" style="'+pillStyle+'" aria-expanded="false" aria-controls="'+panelId+'">'+esc(s.label)+'<span class="chev">⌄</span></button>'+
           (d.maxDays && d.maxDays!=='—' ? '<span class="days">· עד '+esc(d.maxDays)+' יום</span>':'')+
         '</div>'+
-        (d.visaSummary ? '<div class="summary">'+esc(d.visaSummary)+'</div>':'')+
+        (d.visaSummary ? '<div class="visaPanel" id="'+panelId+'" hidden>'+esc(d.visaSummary)+'</div>':'')+
         (d.note ? '<div class="note">⚠ '+esc(d.note)+'</div>':'')+
         '<div class="facts">'+
           '<div class="fact"><div class="fl">עלות/יום</div><div class="fv" style="color:#4FB0A5">'+esc(d.costPerDay||'—')+'</div></div>'+
@@ -188,6 +202,16 @@
       grid.appendChild(card);
     });
   }
+  // טוגל פאנל הוויזה בלחיצה/מקלדת — בלי תלות ב-hover, כדי שיעבוד גם במגע בנייד
+  document.getElementById('grid').addEventListener('click', function(e){
+    var btn = e.target.closest('.pill');
+    if(!btn) return;
+    var panel = document.getElementById(btn.getAttribute('aria-controls'));
+    if(!panel) return;
+    var open = btn.getAttribute('aria-expanded') === 'true';
+    btn.setAttribute('aria-expanded', String(!open));
+    panel.hidden = open;
+  });
   render();
 </script>
 </body>
